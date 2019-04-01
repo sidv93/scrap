@@ -1,0 +1,30 @@
+{
+  "name": "webscrap",
+  "version": "1.0.0",
+  "description": "web scraping in express",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "dev": "node -r esm start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidv93/scrap.git"
+  },
+  "author": "Siddharth Venkatesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidv93/scrap/issues"
+  },
+  "homepage": "https://github.com/sidv93/scrap#readme",
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "esm": "^3.2.22",
+    "express": "^4.16.4"
+  }
+}
