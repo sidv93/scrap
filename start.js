@@ -1,13 +1,22 @@
-import { getHTML, getTwitterFollowers, getInstaFollowers } from './index';
+import { getTwitterFollowers, getInstaFollowers } from './index';
+import express from 'express';
 
-async function go() {
-    const iPromise = getHTML('https://www.instagram.com/sidv93/');
-    const tPromise = getHTML('https://twitter.com/siddhu93');
-    const [instaHTML, twitterHTML] = await Promise.all([iPromise, tPromise]);
-    const twitterCount = await getTwitterFollowers(twitterHTML);
-    const instaFollowers = await getInstaFollowers(instaHTML);
-    console.log(`You have ${twitterCount} Twitter followers!`);
-    console.log(`You have ${instaFollowers} Instagram followers!`);
-}
+const app = express();
 
-go();
+app.get('/scrape', async (req, res, next) => {
+    console.log('scraping');
+    const [iCount, tCount] = await Promise.all([
+        getInstaFollowers(), getTwitterFollowers()
+    ]);
+    console.log(iCount, tCount);
+    // res.json({iCount, tCount});
+    console.log(`You have ${tCount} Twitter followers!`);
+    console.log(`You have ${iCount} Instagram followers!`);
+    // res.json({twitterCount, instaFollowers});
+});
+
+app.listen('3100', () => { console.log('Listening on 3000')});
+// async function go() {
+    
+// }
+
