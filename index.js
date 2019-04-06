@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
+import db from './db';
 
 async function getHTML(url) {
     const {data: html} = await axios.get(url);
@@ -14,7 +15,7 @@ async function getTwitterFollowers() {
 }
 
 async function getInstaFollowers() {
-    const html = await getHTML('https://www.instagram.com/sidv93/')
+    const html = await getHTML('https://www.instagram.com/sidv93')
     const $ = cheerio.load(html);
     const dataString = $('script[type="application/ld+json"]').html();
     const userJson = JSON.parse(dataString);
@@ -22,4 +23,20 @@ async function getInstaFollowers() {
     return instaFollowers;
 }
 
-export { getHTML, getTwitterFollowers, getInstaFollowers };
+async function runCron() {
+    const [iCount, tCount] = await Promise.all([
+        getInstaFollowers(), getTwitterFollowers()
+    ]);
+    db.get('twitter')
+        .push({
+            date: Date.now(),
+            count: tCount
+        }).write();
+    db.get('instagram')
+        .push({
+            date: Date.now(),
+            count: iCount
+        }).write();
+    console.log('Done');
+}
+export { getTwitterFollowers, getInstaFollowers, runCron };
