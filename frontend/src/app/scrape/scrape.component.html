@@ -5,9 +5,8 @@
   <button class="both-button" (click)="getStats()">Both</button><br><br>
 
   <div class="data-display">
-    <div class="data" *ngIf="(stats$ | async) as stats; else loading">
-      Twitter Followers: {{stats.tCount}}
-      Instagram Followers: {{stats.iCount}}
+    <div class="data">
+        <canvas id="myChart" width="400" height="400"></canvas>
     </div>
     <ng-template #loading>
       Loading stuff....
