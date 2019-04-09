@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <input type="text" placeholder="Enter username" [(ngModel)]="username">
+  <button class="insta-button" (click)="getStats('insta')">Instagram stats</button>
+  <button class="twitter-button" (click)="getStats('twitter')">Twitter stats</button>
+  <button class="both-button" (click)="getStats()">Both</button><br><br>
+
+  <div class="data-display">
+    <div class="data">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <ng-template #loading>
+      Loading stuff....
+    </ng-template>
+  </div>
+</div>

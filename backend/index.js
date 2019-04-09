@@ -7,15 +7,15 @@ async function getHTML(url) {
     return html;
 }
 
-async function getTwitterFollowers() {
-    const html = await getHTML('https://twitter.com/siddhu93')
+async function getTwitterFollowers(username='') {
+    const html = await getHTML(`https://twitter.com/${username}`)
     const $ = cheerio.load(html);
     const span = $('[data-nav="followers"] .ProfileNav-value');
     return span.data('count');
 }
 
-async function getInstaFollowers() {
-    const html = await getHTML('https://www.instagram.com/sidv93')
+async function getInstaFollowers(username='') {
+    const html = await getHTML(`https://www.instagram.com/${username}`)
     const $ = cheerio.load(html);
     const dataString = $('script[type="application/ld+json"]').html();
     const userJson = JSON.parse(dataString);
