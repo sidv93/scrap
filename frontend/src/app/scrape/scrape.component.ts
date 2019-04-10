@@ -56,15 +56,15 @@ export class ScrapeComponent implements OnInit, OnDestroy {
     console.log(`type ${type}`);
     this.scrapeService.getChartData(type).subscribe(
       data => {
-        console.log('data=' + JSON.stringify(data.twitter));
+        console.log('data=' + JSON.stringify(data['twitter']));
         let ctx = document.getElementById('myChart');
         let myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: data.twitter.map(obj => new Date(obj.date).toDateString()),
+              labels: data['twitter'].map(obj => new Date(obj.date).toDateString()),
               datasets: [{
                   label: '# of Votes',
-                  data: data.twitter.map(obj => obj.count),
+                  data: data['twitter'].map(obj => obj.count),
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',

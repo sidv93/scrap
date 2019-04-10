@@ -1,9 +1,13 @@
 import { getTwitterFollowers, getInstaFollowers } from './index';
 import express from 'express';
+import http from 'http';
 import util from 'util';
+import socketio from 'socket.io';
 import db from './db';
 import './cron';
+
 const app = express();
+const server = http.Server(app);
 
 app.get('/scrape', async (req, res, next) => {
     console.log('scraping');
@@ -33,7 +37,6 @@ app.get('/chart', (req, res, next) => {
     }
     if(req.query.type === 'twitter') {
         const twitter = db.get('twitter').value();
-        console.log(JSON.stringify(twitter));
         return res.json({twitter});
     }
     const twitter = db.get('twitter').value();
@@ -41,5 +44,12 @@ app.get('/chart', (req, res, next) => {
     res.json({twitter, instagram});
 })
 
-app.listen('3100', () => { console.log('Listening on 3100')});
+server.listen('3100', () => { console.log('Listening on 3100')});
 
+global.io = socketio(server, {origins: "http://localhost:* http://127.0.0.1:*"});
+
+io.on('connection', (socket) => {
+    global.socket = socket;
+});
+
+// DO A ALERT FROM BOTTOM LEFT WHEN A NEW FOLLOWER IS MADE
